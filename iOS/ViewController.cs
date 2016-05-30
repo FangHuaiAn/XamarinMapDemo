@@ -1,6 +1,16 @@
 ﻿using System;
-		
+using System.Text;
+using System.Drawing;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+
 using UIKit;
+using MapKit;
+using Foundation;
+using CoreGraphics;
+using CoreLocation;
+
+using Debug = System.Diagnostics.Debug ;
 
 namespace XamarinMapDemo.iOS
 {
@@ -16,12 +26,16 @@ namespace XamarinMapDemo.iOS
 		{
 			base.ViewDidLoad ();
 
-			// Perform any additional setup after loading the view, typically from a nib.
-			Button.AccessibilityIdentifier = "myButton";
-			Button.TouchUpInside += delegate {
-				var title = string.Format ("{0} clicks!", count++);
-				Button.SetTitle (title, UIControlState.Normal);
-			};
+			var mapCenter = new CLLocationCoordinate2D (
+				23.9737437408,120.981806398);
+			myMapView.CenterCoordinate = mapCenter;
+
+
+			var mapRegion = MKCoordinateRegion.FromDistance (mapCenter, 4000, 4000);
+			myMapView.Region = mapRegion;
+
+			myMapView.ShowsUserLocation = true;
+
 		}
 
 		public override void DidReceiveMemoryWarning ()
